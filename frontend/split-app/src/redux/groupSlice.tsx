@@ -1,78 +1,53 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-interface GroupState {
-  user: any | null;
-  loading: boolean;
-  error: string | null;
-
-
-    //  group:string[]
-    // loading:boolean
-    // error:string |null
- 
+export interface User {
+  id: number; // 👈 change _id to id
+  name: string;
+  email: string;
 }
 
-const initialState: GroupState = {
-  user: null,
+interface UserState {
+  users: User[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: UserState = {
+  users: [],
   loading: false,
   error: null,
 };
 
-// 🔹 Login Thunk
-export const loginUser = createAsyncThunk(
-  'auth/login',
-  async (
-    credentials: { email: string; password: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await fetch('http://localhost:8080/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', 
-        body: JSON.stringify(credentials),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.message || 'Login failed');
-      }
-
-      return await response.json();
-    } catch (error) {
-      return rejectWithValue('Network error');
-    }
+// 🔁 Thunk to fetch all users
+export const fetchUsers = createAsyncThunk("user", async (_, thunkAPI) => {
+  try {
+    const res = await axios.get("http://localhost:8080/user");
+    return res.data; 
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to fetch users");
   }
-);
+});
 
-const loginSlice = createSlice({
-  name: 'login', 
+const userSlice = createSlice({
+  name: "user",
   initialState,
-  reducers: {
-    logout(state) {
-      state.user = null;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.users = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export const { logout } = loginSlice.actions;
-export default loginSlice.reducer;
+export default userSlice.reducer;

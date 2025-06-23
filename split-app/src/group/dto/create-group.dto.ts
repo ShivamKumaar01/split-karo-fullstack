@@ -7,8 +7,8 @@ export class CreateGroupDto {
     @IsString()
     description:string
 
-    @IsOptional()
-    userid:number
+    @IsNumber()
+    createdBy: number;
 
 
 

@@ -12,6 +12,13 @@ export class GroupMemberController {
     return this.groupMemberService.create(createGroupMemberDto);
   }
 
+  //  @Post('adding-member')
+  // addMember(@Body() createGroupMemberDto: CreateGroupMemberDto) {
+  //   return this.groupMemberService.addMember(createGroupMemberDto);
+  // }
+
+  
+
   @Get()
   findAll() {
     return this.groupMemberService.findAll();

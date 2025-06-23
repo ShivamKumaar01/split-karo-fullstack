@@ -8,6 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppDataSource } from './database/data-source';
 import { ExpenseModule } from './expense/expense.module';
 import { GroupMemberModule } from './group-member/group-member.module';
+import { SplitModule } from './split/split.module';
+import { SettleUpModule } from './settle-up/settle-up.module';
+import { MailModule } from './mail/mail.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   // imports: [UserModule, GroupModule, AuthModule],
@@ -18,7 +22,11 @@ import { GroupMemberModule } from './group-member/group-member.module';
     AuthModule,
     GroupModule,
     ExpenseModule,
-    GroupMemberModule
+    GroupMemberModule,
+    SplitModule,
+    SettleUpModule,
+    MailModule,
+    CloudinaryModule
     
   ],
   controllers: [AppController],

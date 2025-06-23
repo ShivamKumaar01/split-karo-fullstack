@@ -3,6 +3,9 @@ import * as dotenv from 'dotenv';
 import { User } from 'src/user/entities/user.entity';
 import { Group } from 'src/group/entities/group.entity';
 import { GroupMember } from 'src/group-member/entities/group-member.entity';
+import { Expense } from 'src/expense/entities/expense.entity';
+import { Split } from 'src/split/entities/split.entity';
+import { SettleUp } from 'src/settle-up/entities/settle-up.entity';
 dotenv.config();
 
 
@@ -17,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || 'split-karo',
   synchronize: true,
   logging:true,
-  entities: [User,Group,GroupMember],
+  entities: [User,Group,GroupMember,Expense,Split,SettleUp],
   // migrations: [isCompiled ? 'dist/database/migrations/*.js' : 'src/database/migrations/*.ts'],
 
 });

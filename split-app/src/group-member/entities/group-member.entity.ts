@@ -5,19 +5,18 @@ import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn
 @Entity()
 export class GroupMember {
     @PrimaryGeneratedColumn()
-    id:number
+    id: number
 
-    @ManyToOne(()=>User)
-    @JoinColumn()
-    user_id:User
 
-    @ManyToOne(()=>Group)
-    @JoinColumn()
-    group_id:Group
+    @ManyToOne(() => User, user => user.groupMembers)
+    user: User;
 
+
+    @ManyToOne(()=>Group,(group)=>group.groupmembers)
+    group:Group
 
     @CreateDateColumn()
-    joinedAt:Date
+    joinedAt: Date
 
 
 }

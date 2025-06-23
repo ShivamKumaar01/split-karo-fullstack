@@ -18,11 +18,7 @@ export class GroupService {
 ){}
   async create(createGroupDto: CreateGroupDto) {
     const name=createGroupDto.title
-    const id=createGroupDto?.userid
-    const user=await this.userService.findOne(id)
-    if(!user){
-      throw new NotFoundException("there is no such user with this user id")
-    }
+    
     const existGroup=await this.findByName(name)
     if(existGroup){
       throw new ConflictException("this group name is already exist")
@@ -30,10 +26,23 @@ export class GroupService {
     const group=new Group()
     group.title=name
     group.description=createGroupDto.description
-    group.user={id:createGroupDto.userid} as any
+    group.user={id:createGroupDto.createdBy} as any
     this.groupRepository.save(group)
     return {message:"group registered successfully",group}
   }
+
+  async getGroupMembers(groupId: number) {
+  const group = await this.groupRepository.findOne({
+    where: { id: groupId },
+    relations: ['groupmembers', 'groupmembers.user'],
+  });
+
+  if (!group) {
+    throw new NotFoundException('Group not found');
+  }
+
+  return group.groupmembers.map((gm) => gm.user);
+}
 
   findAll() {
     return this.groupRepository.find();
@@ -41,6 +50,14 @@ export class GroupService {
 
   findOne(id: number) {
     return this.groupRepository.findOne({where:{id:id}});
+  }
+
+  async findInWhichUserIs(userId:number){
+    const membership=await this.groupRepository.find({
+    where: { user: { id: userId } },
+    relations: ['group'],
+  });
+  return membership;
   }
 
   update(id: number, updateGroupDto: UpdateGroupDto) {
@@ -54,4 +71,15 @@ export class GroupService {
   findByName(name:string){
     return this.groupRepository.findOne({where:{title:name}})
   }
+
+  async GroupInUser(id:number){
+    const user=this.userService.findOne(id)
+    if(!user){
+      throw new NotFoundException('User not found')
+    }
+
+
+  }
+
+
 }

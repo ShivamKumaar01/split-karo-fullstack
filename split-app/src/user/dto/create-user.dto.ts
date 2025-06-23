@@ -11,9 +11,9 @@ export class CreateUserDto {
     @IsEmail()
     email: string
 
-    @IsString()
-    @IsOptional()
-    profilePic:string
+    // @IsString()
+    // @IsOptional()
+    // profilePic:string
     
     @IsEnum(['m', 'f', 'u'], { message: 'gender must be m, f or u' })
     gender: string;
