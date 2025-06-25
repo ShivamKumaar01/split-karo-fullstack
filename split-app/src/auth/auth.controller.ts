@@ -34,6 +34,7 @@ export class AuthController {
       message: 'Logged in successfully',
       name: tokenData.user.name,
       email: tokenData.user.email,
+      token:tokenData.details
     };
   }
 

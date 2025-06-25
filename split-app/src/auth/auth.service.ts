@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   const payload = { sub: user.id, useremail: user.email };
-  // const token = this.jwtService.sign(payload); 
+
   const token = this.jwtService.sign(payload, {
   secret: process.env.SECRET,
   expiresIn: '1h'

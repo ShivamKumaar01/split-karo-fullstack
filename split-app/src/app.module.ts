@@ -14,9 +14,9 @@ import { MailModule } from './mail/mail.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
-  // imports: [UserModule, GroupModule, AuthModule],
+  
     imports: [
-    // ConfigModule.forRoot({ isGlobal: true }), // ✅ Load .env globally
+   
     TypeOrmModule.forRoot(AppDataSource.options),
     UserModule,
     AuthModule,

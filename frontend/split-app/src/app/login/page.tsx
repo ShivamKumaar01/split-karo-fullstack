@@ -9,12 +9,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-// import { AppDispatch, RootState } from "@/redux/store";
-// import { loginUser } from '@/redux/loginslice';
 import { useRouter } from "next/navigation";
 import { AppDispatch } from "@/redux/store";
 import { loginUser } from "@/redux/loginSlice";
-// import toast, { Toaster } from 'react-hot-toast';
+
 
 const schema = yup.object().shape({
   email: yup
@@ -48,14 +46,14 @@ const Login: React.FC = () => {
   const onSubmit = (data: FormData) => {
     dispatch(loginUser(data))
       .unwrap()
-      .then(() => {
+      .then((response) => {
         // toast.success("Login successful!");
+         localStorage.setItem('token', response.token);
         setTimeout(() => {
           router.push("/main");
         }, 1000);
       })
       .catch((err) => {
-        // toast.error(err?.message || "Invalid email or password");
         console.error(err);
       });
     console.log(data)
@@ -63,7 +61,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      {/* <Toaster position="top-right" /> ✅ Toast container */}
+      {/* <Toaster position="top-right" /> */}
 
       <Box display={"flex"} paddingTop={"6%"} width={"100vw"}>
         <Box
@@ -81,7 +79,7 @@ const Login: React.FC = () => {
             Login
           </Typography>
           <h6>
-            Don't have an account? <Link href={"/pages/signup"}>Signup</Link>
+            Don't have an account? <Link href={"/signup"}>Signup</Link>
           </h6>
 
           <form onSubmit={handleSubmit(onSubmit)}>

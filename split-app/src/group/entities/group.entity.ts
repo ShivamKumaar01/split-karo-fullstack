@@ -13,10 +13,8 @@ export class Group {
     @Column()
     title:string
 
-
     @Column()
     description:string
-
 
     @CreateDateColumn()
     createdat:Date

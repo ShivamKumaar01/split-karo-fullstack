@@ -52,7 +52,7 @@ export class GroupMemberService {
       throw new ConflictException('All users are already in the group');
     }
 
-    // ✅ 4. Create new GroupMembers
+   
     const groupMembersToSave = newUsers.map((user) => {
       const member = new GroupMember();
       member.user = user;
@@ -108,5 +108,27 @@ export class GroupMemberService {
       groups,
     };
   }
+
+ 
+ async removeUserFromGroup(groupId: number, userId: number) {
+  const groupMember = await this.groupMemberRepo.findOne({
+    where: {
+      group: { id: groupId },
+      user: { id: userId },
+    },
+    relations: ['group', 'user'],
+  });
+
+  if (!groupMember) {
+    throw new NotFoundException('User is not part of this group');
+  }
+
+  await this.groupMemberRepo.remove(groupMember);
+
+  return {
+    message: `User ${userId} removed from group ${groupId}`,
+  };
+}
+
 
 }

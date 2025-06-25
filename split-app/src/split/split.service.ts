@@ -10,32 +10,22 @@ import { ExpenseService } from 'src/expense/expense.service';
 @Injectable()
 export class SplitService {
   constructor(
-    @InjectRepository(Split) private readonly splitRepository:Repository<Split>,
-    private readonly userService:UserService,
-    // private readonly expenseService:ExpenseService
-        @Inject(forwardRef(() => ExpenseService)) 
+    @InjectRepository(Split) public readonly splitRepository: Repository<Split>,
+    private readonly userService: UserService,
+    
+    @Inject(forwardRef(() => ExpenseService))
     private readonly expenseService: ExpenseService
 
 
-){}
+  ) { }
   async create(createSplitDto: CreateSplitDto) {
-    // const userid=createSplitDto.userId
-    // const expenseid=createSplitDto.expenseId
-    // const existUser=await this.userService.findOne(userid)
-    // if(!userid){
-    //   throw new NotFoundException("user not found with this id")
-    // }
-    // const existExpense=await this.expenseService.findOne(expenseid)
-    // if(!existExpense){
-    //   throw new NotFoundException("expense not found with this id")
-    // }
-    // const split=new Split()
-    
+  
+
     return 'This action adds a new split';
   }
   async saveSplit(split: Split): Promise<Split> {
-  return this.splitRepository.save(split);
-}
+    return this.splitRepository.save(split);
+  }
 
   findAll() {
     return `This action returns all split`;
@@ -49,7 +39,17 @@ export class SplitService {
     return `This action updates a #${id} split`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} split`;
+  async remove(id: number) {
+    const split = await this.splitRepository.findOne({ where: { id } });
+    if (!split) throw new NotFoundException('Split not found');
+    await this.splitRepository.remove(split);
   }
+
+
+  async getSplitsByExpense(expenseId: number) {
+  return this.splitRepository.find({
+    where: { expense: { id: expenseId } },
+    relations: ['user'],
+  });
+}
 }

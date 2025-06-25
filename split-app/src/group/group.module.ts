@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Group } from './entities/group.entity';
 import { User } from 'src/user/entities/user.entity';
 import { UserModule } from 'src/user/user.module';
+import { GroupMemberModule } from 'src/group-member/group-member.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Group,User]),UserModule],
+  imports:[TypeOrmModule.forFeature([Group,User]),UserModule,GroupMemberModule],
   controllers: [GroupController],
   providers: [GroupService],
   exports:[GroupService]

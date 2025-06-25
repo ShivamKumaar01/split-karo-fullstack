@@ -14,13 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 export default function Navbar() {
-//   const [auth, setAuth] = React.useState(true);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setAuth(event.target.checked);
-//   };
-
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -31,18 +26,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-            //   checked={auth}
-            //   onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup> */}
+    
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -55,7 +39,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            Split-Karo
           </Typography>
           {(
             <div>

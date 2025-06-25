@@ -3,6 +3,9 @@ import signupReducer from './signupSlice';
 import authReducer from './signupSlice';
 import loginReducer from './loginSlice'
 import userReducer from './groupSlice';
+import groupReducer from './createGroupSlice';
+import groupsReducer from './useringroupSlice';
+import groupExpenseReducer from './groupExpenseSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +13,9 @@ export const store = configureStore({
     auth: authReducer,
     login: loginReducer,
     user: userReducer,
+    group: groupReducer,
+     groups: groupsReducer,
+      groupExpense: groupExpenseReducer,
     
   },
 });

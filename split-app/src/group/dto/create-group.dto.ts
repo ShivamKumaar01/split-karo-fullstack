@@ -7,8 +7,8 @@ export class CreateGroupDto {
     @IsString()
     description:string
 
-    @IsNumber()
-    createdBy: number;
+    // @IsNumber()
+    // createdBy: number;
 
 
 

@@ -31,4 +31,8 @@ export class SplitController {
   remove(@Param('id') id: string) {
     return this.splitService.remove(+id);
   }
+    @Get('expense/:expenseId')
+  getSplitsByExpense(@Param('expenseId') expenseId: string) {
+    return this.splitService.getSplitsByExpense(+expenseId);
+  }
 }

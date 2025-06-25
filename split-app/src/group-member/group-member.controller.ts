@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { GroupMemberService } from './group-member.service';
 import { CreateGroupMemberDto } from './dto/create-group-member.dto';
 import { UpdateGroupMemberDto } from './dto/update-group-member.dto';
+import { RemoveGroupMemberDto } from './dto/remove-group-member.dto';
 
 @Controller('group-member')
 export class GroupMemberController {
@@ -12,12 +13,7 @@ export class GroupMemberController {
     return this.groupMemberService.create(createGroupMemberDto);
   }
 
-  //  @Post('adding-member')
-  // addMember(@Body() createGroupMemberDto: CreateGroupMemberDto) {
-  //   return this.groupMemberService.addMember(createGroupMemberDto);
-  // }
-
-  
+ 
 
   @Get()
   findAll() {
@@ -38,4 +34,13 @@ export class GroupMemberController {
   remove(@Param('id') id: string) {
     return this.groupMemberService.remove(+id);
   }
+
+
+  
+
+@Post('remove-user')
+removeUser(@Body() removeDto: RemoveGroupMemberDto) {
+  return this.groupMemberService.removeUserFromGroup(removeDto.groupId, removeDto.userId);
+}
+
 }

@@ -4,8 +4,7 @@ export class CreateSplitDto {
   @IsNumber()
   amount: number;
 
-  // @IsString()
-  // status: string; // 'owed' | 'paid'
+ 
    @IsIn(['owed', 'paid'], {
     message: 'Status must be either "owed" or "paid"',
   })
